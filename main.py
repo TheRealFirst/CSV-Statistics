@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import csv
 from tkinter import *
 from tkinter import ttk
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilenames
 import os
 
 def isCSV(fileName):
@@ -46,11 +46,16 @@ class InputFile():
 
 files = []
 def loadFile():
-    file = InputFile(askopenfilename())
-    files.append(file)
+    filenames = askopenfilenames()
+    if filenames:
+        for filename in filenames:
+            if(isCSV(filename)):
+                file = InputFile(filename)
+                files.append(file)
 
-    show_button = ttk.Button(frm, text=f"Show Graph: {os.path.basename(file.fileName)}", command=file.DrawPlot)
-    show_button.pack(pady=5)
+                show_button = ttk.Button(frm, text=f"Show Graph: {os.path.basename(file.fileName)}", command=file.DrawPlot)
+                show_button.pack(pady=5)
+    
     
 root = Tk()
 frm = ttk.Frame(root, padding=10)
@@ -58,8 +63,3 @@ frm.pack()
 ttk.Button(frm, text="load file", command=loadFile).pack()
 ttk.Button(frm, text="Quit", command=root.destroy).pack()
 root.mainloop()
-
-
-
-
-
