@@ -1,2 +1,3 @@
-.csv
-.CSV
+*.csv
+*.CSV
+*.log
